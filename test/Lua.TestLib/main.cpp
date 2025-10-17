@@ -5,9 +5,10 @@
  */
 
 #include <cstdio>
-extern "C" {
-  #include <lua.h>
-  #include <lauxlib.h>
+extern "C"
+{
+#include <lua.h>
+#include <lauxlib.h>
 }
 
 #ifdef _WIN32
@@ -18,18 +19,17 @@ extern "C" {
 #define CALL
 #endif
 
-static int hello_world(lua_State* L) {
-  puts("hello, world!");
-  return 0;
+static int hello_world(lua_State *L)
+{
+    puts("hello, world!");
+    return 0;
 }
 
-luaL_Reg TESTLIB_FUNCTIONS[] = {
-  {"hello_world", hello_world},
-  {NULL, NULL}
-};
+luaL_Reg TESTLIB_FUNCTIONS[] = {{"hello_world", hello_world}, {NULL, NULL}};
 
-EXPORT int luaopen_testlib(lua_State* L) {
-  luaL_newlib(L, TESTLIB_FUNCTIONS);
-  lua_setglobal(L, "testlib");
-  return 0;
+EXPORT int luaopen_testlib(lua_State *L)
+{
+    luaL_newlib(L, TESTLIB_FUNCTIONS);
+    lua_setglobal(L, "testlib");
+    return 0;
 }

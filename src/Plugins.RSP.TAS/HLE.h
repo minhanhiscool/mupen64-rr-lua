@@ -55,7 +55,7 @@ typedef struct
     unsigned long yield_data_size;
 } OSTask_t;
 
-void jpg_uncompress(OSTask_t* task);
+void jpg_uncompress(OSTask_t *task);
 
 extern uint32_t inst1, inst2;
 extern uint16_t AudioInBuffer, AudioOutBuffer, AudioCount;
