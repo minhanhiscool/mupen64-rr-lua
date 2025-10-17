@@ -128,7 +128,7 @@ add_executable(Mupen64RR.Views.Win32 WIN32
     "ResizeAnchor.cpp"
 
     # Resource script
-    "rsrc.rc"
+    "Resource.rc"
 )
 set_target_properties(Mupen64RR.Views.Win32 PROPERTIES
     CXX_STANDARD 23
