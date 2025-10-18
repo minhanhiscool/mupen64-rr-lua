@@ -74,7 +74,8 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
   # - disable Address-Space Layout Randomization (ASLR)
   # - disable Windows Data Execution Prevention (DEP)
   # - enable the program to use pointers larger than 2GB
-  add_link_options(/DYNAMICBASE:NO /NXCOMPAT:NO /LARGEADDRESSAWARE)
+  # - disable the generation of a manifest file (since it's pulled in internally via the resource script)
+  add_link_options(/DYNAMICBASE:NO /NXCOMPAT:NO /LARGEADDRESSAWARE /MANIFEST:NO)
 endif()
 if (WIN32)
   # Use UTF-16 versions of functions
