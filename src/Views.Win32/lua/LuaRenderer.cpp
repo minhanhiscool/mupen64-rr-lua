@@ -232,6 +232,17 @@ void LuaRenderer::create_renderer(t_lua_rendering_context *ctx, t_lua_environmen
         CreateWindowEx(WS_EX_LAYERED, D2D_OVERLAY_CLASS, L"", WS_CHILD | WS_VISIBLE, 0, 0, ctx->dc_size.width,
                        ctx->dc_size.height, g_main_ctx.hwnd, nullptr, g_main_ctx.hinst, nullptr);
 
+    // Bring the windows to top so they are above the MGE compositor
+    if (IsWindow(ctx->gdi_overlay_hwnd))
+    {
+        BringWindowToTop(ctx->gdi_overlay_hwnd);
+    }
+
+    if (IsWindow(ctx->d2d_overlay_hwnd))
+    {
+        BringWindowToTop(ctx->d2d_overlay_hwnd);
+    }
+
     SetProp(ctx->d2d_overlay_hwnd, CTX_PROP, env);
     SetProp(ctx->gdi_overlay_hwnd, CTX_PROP, env);
 
