@@ -10,7 +10,7 @@
             "name": "mupen64.exe (x86, VS)",
             "program": "${workspaceFolder}/build/out/mupen64.exe",
             "cwd": "${workspaceFolder}",
-            "preLaunchTask": "CMake: Build"
+            "preLaunchTask": "Build Project"
         }
     ]
 }
