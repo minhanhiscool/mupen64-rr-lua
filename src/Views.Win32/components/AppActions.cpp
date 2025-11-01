@@ -1001,9 +1001,9 @@ void AppActions::add()
                enable_when_emu_launched_and_vcr_active);
     generate_path_recent_menu(RECENT_MOVIES, Hotkey::t_hotkey('T', true, true), &g_config.recent_movie_paths,
                               &g_config.is_recent_movie_paths_frozen, load_recent_movie);
-    add_action(LOOP_MOVIE_PLAYBACK, Hotkey::t_hotkey('L', true), toggle_movie_loop, always_enabled,
+    add_action(LOOP_MOVIE_PLAYBACK, Hotkey::t_hotkey('L', false, true), toggle_movie_loop, always_enabled,
                [] { return g_config.core.is_movie_loop_enabled; });
-    add_action(READONLY, Hotkey::t_hotkey('R', true), toggle_readonly, always_enabled,
+    add_action(READONLY, Hotkey::t_hotkey('R', false, true), toggle_readonly, always_enabled,
                [] { return g_config.core.vcr_readonly; });
     add_action(WAIT_AT_MOVIE_END, Hotkey::t_hotkey::make_empty(), toggle_wait_at_movie_end, always_enabled,
                [] { return g_config.core.wait_at_movie_end; });
