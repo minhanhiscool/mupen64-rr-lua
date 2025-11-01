@@ -11,7 +11,7 @@
 #include <Views.Win32/ViewPlugin.h>
 #include <resource.h>
 
-#define PLUGIN_VERSION "1.0.0"
+#define PLUGIN_VERSION "1.0.1"
 
 #ifdef _M_X64
 #define PLUGIN_ARCH " x64"
