@@ -16,7 +16,7 @@
 #ifdef _M_X64
 #define PLUGIN_ARCH " x64"
 #else
-#define PLUGIN_ARCH " x86"
+#define PLUGIN_ARCH " "
 #endif
 
 #ifdef _DEBUG

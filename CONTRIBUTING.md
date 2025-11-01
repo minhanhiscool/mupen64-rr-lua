@@ -115,10 +115,8 @@ Failure to comply will fail the check-format workflow.
 # Plugin Guidelines
 
 - Give your plugin a descriptive name.
-    1. The filename should be formatted as follows: `[Plugin Name]-[x86|x64]-[debug|release].dll`
-        a. e.g.: `TASInput-x86-release.dll` 
-    2. The friendly name should be formatted as follows: `[Plugin Name] [Version] [x86|x64] [Debug]`
-        a. e.g.: `TASInput 2.0.0 x86`, `TASInput 2.0.0 x86 Debug`
+    1. The friendly name should be formatted as follows: `[Plugin Name] [Version] [x64] [Debug]`
+        a. e.g.: `TASInput 2.0.0`, `TASInput 2.0.0 x64 Debug`
 - Do as little initialization work in `DllMain` as possible. Do it all in `RomOpen` and cache the results.
     1. Watch out for implicit COM initialization through DirectInput!
 - Write persistent config to the registry, not the filesystem.
