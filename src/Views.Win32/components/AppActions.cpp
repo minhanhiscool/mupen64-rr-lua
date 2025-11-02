@@ -585,12 +585,6 @@ static void show_ram_start()
     wchar_t proc_name[MAX_PATH] = {0};
     GetModuleFileName(NULL, proc_name, MAX_PATH);
 
-    auto exe_filename = IOUtils::exe_path_cached().filename();
-
-    const auto stroop_line = std::format(L"<Emulator name=\"Mupen 5.0 RR\" processName=\"{}\" ramStart=\"{}\" "
-                                         L"endianness=\"little\" autoDetect=\"true\"/>",
-                                         exe_filename.c_str(), ram_start);
-
     const auto str = std::format(L"The RAM start is {}.\r\nHow would you like to proceed?", ram_start);
 
     const auto result = DialogService::show_multiple_choice_dialog(
@@ -598,6 +592,11 @@ static void show_ram_start()
 
     if (result == 0)
     {
+        auto exe_filename = IOUtils::exe_path_cached().stem();
+
+        const auto stroop_line = std::format(L"<Emulator name=\"Mupen 5.0 RR\" processName=\"{}\" ramStart=\"{}\" "
+                                             L"endianness=\"little\" autoDetect=\"true\"/>",
+                                             exe_filename.c_str(), ram_start);
         copy_to_clipboard(g_main_ctx.hwnd, stroop_line);
     }
 }
