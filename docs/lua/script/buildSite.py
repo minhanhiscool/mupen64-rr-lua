@@ -335,16 +335,15 @@ def add_header(html: StringAccumulator):
             <meta charset="UTF-8" />
             <meta http-equiv="X-UA-Compatible" content="IE=edge" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <base href="/docs/lua">
-            <link href="css/styles.css" type="text/css" rel="stylesheet">
-            <link href="css/pygments.css" type="text/css" rel="stylesheet">
+            <link href="/docs/lua/css/styles.css" type="text/css" rel="stylesheet">
+            <link href="/docs/lua/css/pygments.css" type="text/css" rel="stylesheet">
             <title>Mupen Lua API Docs</title>
         </head>
         <body>
             <div class="sidebar">
             <div class="sidebarheader">
                 <div class="logo">
-                    <a href="index.html"><img src="img/mupen_logo.png"></a>
+                    <a href="index.html"><img src="/docs/lua/img/mupen_logo.png"></a>
                 </div>
                 <div class="logolabel">
                     mupen64-rr-lua docs
@@ -444,7 +443,7 @@ def add_body(
 
 
 def add_javascript(html: StringAccumulator):
-    html.add(f"<script src='js/index.js'></script>")
+    html.add(f"<script src='/docs/lua/js/index.js'></script>")
 
 
 def add_footer(html: StringAccumulator):
