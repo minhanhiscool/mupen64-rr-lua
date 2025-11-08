@@ -192,6 +192,11 @@ static int draw_text(lua_State *L)
         .height = rectangle.bottom - rectangle.top,
     };
 
+    if (params.width < 0.0f || params.height < 0.0f)
+    {
+        return 0;
+    }
+
     uint64_t params_hash = xxh64::hash((const char *)&params, sizeof(params), 0);
 
     if (!lua->rctx.dw_text_layouts.contains(params_hash))
