@@ -200,10 +200,9 @@ static int draw_text(lua_State *L)
 
         IDWriteTextFormat *text_format;
 
-        lua->rctx.dw_factory->CreateTextFormat(IOUtils::to_wide_string(font_name).c_str(), nullptr,
-                                               static_cast<DWRITE_FONT_WEIGHT>(font_weight),
-                                               static_cast<DWRITE_FONT_STYLE>(font_style), DWRITE_FONT_STRETCH_NORMAL,
-                                               font_size, L"", &text_format);
+        lua->rctx.dw_factory->CreateTextFormat(
+            IOUtils::to_wide_string(font_name).c_str(), nullptr, static_cast<DWRITE_FONT_WEIGHT>(font_weight),
+            static_cast<DWRITE_FONT_STYLE>(font_style), DWRITE_FONT_STRETCH_NORMAL, font_size, L"", &text_format);
 
         text_format->SetTextAlignment(static_cast<DWRITE_TEXT_ALIGNMENT>(horizontal_alignment));
         text_format->SetParagraphAlignment(static_cast<DWRITE_PARAGRAPH_ALIGNMENT>(vertical_alignment));
@@ -369,8 +368,8 @@ static int load_image(lua_State *L)
 
     CoCreateInstance(CLSID_WICImagingFactory, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pIWICFactory));
 
-    HRESULT hr = pIWICFactory->CreateDecoderFromFilename(IOUtils::to_wide_string(path).c_str(), NULL,
-                                                         GENERIC_READ, WICDecodeMetadataCacheOnLoad, &pDecoder);
+    HRESULT hr = pIWICFactory->CreateDecoderFromFilename(IOUtils::to_wide_string(path).c_str(), NULL, GENERIC_READ,
+                                                         WICDecodeMetadataCacheOnLoad, &pDecoder);
 
     if (!SUCCEEDED(hr))
     {
@@ -444,8 +443,8 @@ static int draw_to_image(lua_State *L)
     auto lua = LuaManager::get_environment_for_state(L);
     LuaRenderer::ensure_d2d_renderer_created(&lua->rctx);
 
-    float width = luaL_checknumber(L, 1);
-    float height = luaL_checknumber(L, 2);
+    float width = std::max((float)luaL_checknumber(L, 1), 1.0f);
+    float height = std::max((float)luaL_checknumber(L, 2), 1.0f);
 
     ID2D1BitmapRenderTarget *render_target;
     lua->rctx.d2d_render_target_stack.top()->CreateCompatibleRenderTarget(D2D1::SizeF(width, height), &render_target);

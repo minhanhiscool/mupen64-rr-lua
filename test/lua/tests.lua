@@ -156,6 +156,17 @@ lust.describe('mupen64', function()
         end)
     end)
 
+    lust.describe('d2d', function()
+        lust.describe('draw_to_image', function()
+            lust.it('clamps_negative_sizes', function()
+                local img = d2d.draw_to_image(-10, -10, function() end)
+                local info = d2d.get_image_info(img)
+                lust.expect(info.width).to.equal(1)
+                lust.expect(info.height).to.equal(1)
+            end)
+        end)
+    end)
+
     lust.describe('trust', function()
         local function print_test_wrapper(func)
             __prev_print = print
