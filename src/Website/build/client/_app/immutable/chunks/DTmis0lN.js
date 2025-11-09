@@ -1,1 +1,0 @@
-const e=""+new URL("../assets/mupen64.r2KSJ-oo.svg",import.meta.url).href;export{e as m};
