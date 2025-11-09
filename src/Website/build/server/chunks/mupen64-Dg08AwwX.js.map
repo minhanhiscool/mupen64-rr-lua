@@ -1,0 +1,1 @@
+{"version":3,"file":"mupen64-Dg08AwwX.js","sources":["../../../.svelte-kit/adapter-node/chunks/mupen64.js"],"sourcesContent":["const mupen64 = \"/_app/immutable/assets/mupen64.r2KSJ-oo.svg\";\nexport {\n  mupen64 as m\n};\n"],"names":[],"mappings":"AAAK,MAAC,OAAO,GAAG;;;;"}
