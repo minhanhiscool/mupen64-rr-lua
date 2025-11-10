@@ -18,6 +18,7 @@ export const load: PageServerLoad = async ({ params }) => {
         hooks: {
             postprocess(html) {
                 html = html.replaceAll('<p', '<p class="y-2"');
+                html = html.replaceAll('<a', '<a class="link"');
                 html = html.replaceAll('<h1', '<h1 class="my-4 text-3xl font-bold"');
                 html = html.replaceAll('<h2', '<h2 class="my-3 text-2xl"');
                 html = html.replaceAll('<h3', '<h3 class="my-2 text-xl"');
