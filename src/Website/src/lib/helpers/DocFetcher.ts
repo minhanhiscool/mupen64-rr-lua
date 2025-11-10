@@ -43,23 +43,19 @@ function find_dir_upwards(target_dir_name: string, start_dir = ".") {
 
 export async function get_doc_paths() {
     try {
-        console.log("1")
         const up_dir = find_dir_upwards('Website');
-        console.log("2")
 
         if (!up_dir) {
-            error(500, `Website directory not found`);
+            throw new Error("Could not find 'Website' directory upwards from current location");
         }
-        console.log("3")
 
         const docs_dir = path.join(up_dir, "../../docs/win");
-        console.log("4")
 
         const files = get_files_in_folder(docs_dir);
-        console.log("5")
 
         return files.map(file_path => path.parse(file_path).name);
-    } catch (err) {
-        error(500, err.message);
+    } catch (e) {
+        console.error(e);
+        throw error(500, "Failed to get documentation paths");
     }
 }
