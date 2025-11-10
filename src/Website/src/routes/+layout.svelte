@@ -3,7 +3,7 @@
 	import mupen64 from '$lib/assets/mupen64.svg';
 	import sm64luaredux from '$lib/assets/sm64luaredux.png';
 	import ugui from '$lib/assets/ugui.png';
-	import { doc_filesystem_to_friendly_name } from '$lib/helpers/DocNameConverter';
+	import { doc_name_to_friendly_name } from '$lib/helpers/DocNameConverter';
 
 	let { children, data } = $props();
 </script>
@@ -26,9 +26,9 @@
 				<span>Lua Docs</span>
 			</a>
 			<hr class="border border-dashed border-red-600" />
-			{#each data.files as file}
-				<a href="/docs/win/{file}" class="flex flex-row items-center gap-2 py-2 hover:underline">
-					<span>{doc_filesystem_to_friendly_name(file)}</span>
+			{#each data.doc_names as name}
+				<a href="/docs/win/{name}" class="flex flex-row items-center gap-2 py-2 hover:underline">
+					<span>{doc_name_to_friendly_name(name)}</span>
 				</a>
 			{/each}
 		</div>

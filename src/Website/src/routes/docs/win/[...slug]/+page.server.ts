@@ -1,29 +1,19 @@
-import matter from 'gray-matter';
-import { Marked, marked } from 'marked';
+import { Marked } from 'marked';
 import type { PageServerLoad } from './$types';
-import * as fs from 'node:fs';
-import * as path from 'node:path';
-import { error, redirect } from '@sveltejs/kit';
-import { doc_filesystem_to_friendly_name } from '$lib/helpers/DocNameConverter';
-import { get_doc_paths } from '$lib/helpers/DocFetcher';
-
-const DOCS_DIR = '../../docs/win';
+import { redirect } from '@sveltejs/kit';
+import { doc_name_to_friendly_name } from '$lib/helpers/DocNameConverter';
+import { get_doc_by_name, get_doc_names } from '$lib/helpers/DocFetcher';
 
 export const load: PageServerLoad = async ({ params }) => {
 
-    const doc_paths = await get_doc_paths();
+    const doc_names = await get_doc_names();
 
     if (params.slug == "") {
-        redirect(307, `/docs/win/${doc_paths[0]}`);
+        redirect(307, `/docs/win/${doc_names[0]}`);
     }
 
-    const file_path = path.join(DOCS_DIR, `${params.slug}.md`);
-    if (!fs.existsSync(file_path)) {
-        error(404, 'Document not found');
-    }
+    const content = (await get_doc_by_name(params.slug))!;
 
-    const file = fs.readFileSync(file_path, 'utf-8');
-    const { content } = matter(file);
     const marked = new Marked({
         hooks: {
             postprocess(html) {
@@ -58,6 +48,6 @@ export const load: PageServerLoad = async ({ params }) => {
 
     return {
         content: html,
-        title: doc_filesystem_to_friendly_name(params.slug),
+        title: doc_name_to_friendly_name(params.slug),
     };
 };
