@@ -42,11 +42,18 @@ function find_dir_upwards(target_dir_name: string, start_dir = ".") {
 }
 
 export async function get_doc_paths() {
-    const up_dir = find_dir_upwards('Website');
-    if (!up_dir) {
-        error(500);
-    }
+    try {
+        const up_dir = find_dir_upwards('Website');
+        if (!up_dir) {
+            error(500, `Website directory not found`);
+        }
 
-    const docs_dir = path.join(up_dir, "../../docs/win");
-    return get_files_in_folder(docs_dir).map(file_path => path.parse(file_path).name);
+        const docs_dir = path.join(up_dir, "../../docs/win");
+
+        const files = get_files_in_folder(docs_dir);
+
+        return files.map(file_path => path.parse(file_path).name);
+    } catch (err) {
+        error(500, err.message);
+    }
 }
