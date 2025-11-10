@@ -55,7 +55,6 @@ export const load: PageServerLoad = async ({ params }) => {
     });
 
     const html = await marked.parse(content);
-    console.log(html)
 
     return {
         content: html,
