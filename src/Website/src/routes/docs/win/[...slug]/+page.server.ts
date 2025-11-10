@@ -17,6 +17,12 @@ export const load: PageServerLoad = async ({ params }) => {
     const marked = new Marked({
         hooks: {
             postprocess(html) {
+                html = html.replaceAll('[!NOTE]', '<div class="note">');
+                html = html.replaceAll('[!NOTE---]', '</div>');
+                html = html.replaceAll('[!WARN]', '<div class="warn">');
+                html = html.replaceAll('[!WARN---]', '</div>');
+                html = html.replaceAll('[!CAUTION]', '<div class="caution">');
+                html = html.replaceAll('[!CAUTION---]', '</div>');
                 html = html.replaceAll('<p', '<p class="y-2"');
                 html = html.replaceAll('<a', '<a class="link"');
                 html = html.replaceAll('<h1', '<h1 class="my-4 text-3xl font-bold"');
