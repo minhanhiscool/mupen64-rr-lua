@@ -14,7 +14,7 @@ add_subdirectory(Core)
 
 if (WIN32)
   # Plugins and Views of Windows
-  add_subdirectory(Win32)
+  add_subdirectory(Windows)
 elseif (UNIX)
   # Plugins and Views of Unix
   add_subdirectory(Unix)

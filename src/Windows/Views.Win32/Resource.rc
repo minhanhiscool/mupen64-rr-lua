@@ -1,0 +1,451 @@
+// Microsoft Visual C++ generated resource script.
+//
+#pragma code_page(65001)
+
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include <Windows.h>
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEUD)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_CONTROL             BITMAP                  "icons\\plugin_input.bmp"
+
+IDB_DISPLAY             BITMAP                  "icons\\plugin_video.bmp"
+
+IDB_RSP                 BITMAP                  "icons\\plugin_rsp.bmp"
+
+IDB_SOUND               BITMAP                  "icons\\plugin_audio.bmp"
+
+IDR_INSPECT_LUA_FILE    TEXTFILE                "..\\..\\vendor\\lua-modules\\inspect.lua"
+
+IDR_API_LUA_FILE        TEXTFILE                "..\\api.lua"
+
+IDR_SHIMS_LUA_FILE      TEXTFILE                "..\\shims.lua"
+
+IDR_SANDBOX_LUA_FILE    TEXTFILE                "..\\sandbox.lua"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_HOTKEY DIALOGEX 0, 0, 250, 70
+STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Bind a Hotkey"
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+    LTEXT  "",IDC_STATIC,0,0,250,25,SS_CENTER | SS_CENTERIMAGE | SS_NOPREFIX
+    PUSHBUTTON  "(awaiting key or mouse press...)",IDC_CURRENT_HOTKEY,70,25,110,14
+    PUSHBUTTON  "Clear Hotkey",IDC_CLEAR,70,43,110,14
+END
+
+IDD_PLUGIN_CONFIG DIALOGEX 0, 0, 231, 281
+STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Video/Audio/Input/RSP Settings"
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,169,265,60,14
+END
+
+IDD_SETTINGS_PLUGINS DIALOGEX 0, 0, 231, 262
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+    GROUPBOX        "Video",IDC_GFXPLUGIN,6,6,215,53
+    COMBOBOX        IDC_COMBO_GFX,54,18,156,100,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP | WS_DISABLED
+    PUSHBUTTON      "Config",IDM_VIDEO_SETTINGS,54,36,48,15,WS_DISABLED
+    PUSHBUTTON      "Test",IDGFXTEST,108,36,48,15,WS_DISABLED
+    PUSHBUTTON      "About",IDGFXABOUT,162,36,48,15,WS_DISABLED
+    GROUPBOX        "Input",IDC_INPUTPLUGIN,6,66,215,53
+    COMBOBOX        IDC_COMBO_INPUT,54,78,156,100,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP | WS_DISABLED
+    PUSHBUTTON      "Config",IDM_INPUT_SETTINGS,54,96,48,15,WS_DISABLED
+    PUSHBUTTON      "Test",IDINPUTTEST,108,96,48,15,WS_DISABLED
+    PUSHBUTTON      "About",IDINPUTABOUT,162,96,48,15,WS_DISABLED
+    GROUPBOX        "Audio",IDC_SOUNDPLUGIN,6,126,215,53
+    COMBOBOX        IDC_COMBO_SOUND,54,138,156,100,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP | WS_DISABLED
+    PUSHBUTTON      "Config",IDM_AUDIO_SETTINGS,54,156,48,15,WS_DISABLED
+    PUSHBUTTON      "Test",IDSOUNDTEST,108,156,48,15,WS_DISABLED
+    PUSHBUTTON      "About",IDSOUNDABOUT,162,156,48,15,WS_DISABLED
+    GROUPBOX        "RSP",IDC_RSPPLUGIN,6,186,215,53,
+    COMBOBOX        IDC_COMBO_RSP,54,198,156,100,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP | WS_DISABLED
+    PUSHBUTTON      "Config",IDM_RSP_SETTINGS,54,216,48,15,WS_DISABLED
+    PUSHBUTTON      "Test",IDRSPTEST,108,216,48,15,WS_DISABLED
+    PUSHBUTTON      "About",IDRSPABOUT,162,216,48,15,WS_DISABLED
+    CONTROL         "",IDB_DISPLAY,"Static",SS_BITMAP,13,21,15,13
+    CONTROL         "",IDB_CONTROL,"Static",SS_BITMAP,13,80,15,13
+    CONTROL         "",IDB_SOUND,"Static",SS_BITMAP,13,139,15,13
+    CONTROL         "",IDB_RSP,"Static",SS_BITMAP,13,198,15,13
+    LTEXT           "",IDC_PLUGIN_WARNING,8,242,200,13
+    PUSHBUTTON      "More...",IDC_PLUGIN_DISCOVERY_INFO,6,255,70,15,WS_DISABLED
+END
+
+IDD_SETTINGS_GENERAL DIALOGEX 0, 0, 231, 281
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+END
+
+IDD_MOVIE_DIALOG DIALOGEX 0, 0, 343, 218
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Movie"
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    LTEXT           "Movie File:",IDC_INI_MOVIEFILE_TEXT,18,7,40,8
+    EDITTEXT        IDC_INI_MOVIEFILE,61,6,212,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "Browse...",IDC_MOVIE_BROWSE,283,4,50,14
+    LTEXT           "Author:",IDC_STATIC,27,30,29,8
+    EDITTEXT        IDC_INI_AUTHOR,61,27,272,12,ES_AUTOHSCROLL
+    LTEXT           "Description:",IDC_STATIC,14,54,42,8
+    EDITTEXT        IDC_INI_DESCRIPTION,61,46,272,24,ES_MULTILINE | ES_AUTOVSCROLL | ES_WANTRETURN | WS_VSCROLL
+    GROUPBOX        "Start from",IDC_GROUP_START_FROM,240,72,96,66
+    CONTROL         "",IDC_MOVIE_INFO_TEMPLATE,"Static",SS_BLACKFRAME,6,72,228,138
+    CONTROL         "Start",IDC_RADIO_FROM_START,"Button",BS_AUTORADIOBUTTON,246,84,78,8
+    CONTROL         "Savestate",IDC_RADIO_FROM_ST,"Button",BS_AUTORADIOBUTTON,246,96,78,8
+    CONTROL         "EEPROM",IDC_RADIO_FROM_EEPROM,"Button",BS_AUTORADIOBUTTON,246,108,78,8
+    GROUPBOX        "Pause at",IDC_STATIC,240,138,96,60
+    LTEXT           "Frame",IDC_STATIC,246,150,21,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_PAUSEAT_FIELD,270,150,33,13,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "End",IDC_PAUSE_AT_END,"Button",BS_AUTOCHECKBOX,246,186,31,8
+    DEFPUSHBUTTON   "OK",IDOK,240,198,48,12
+    PUSHBUTTON      "Cancel",IDCANCEL,288,198,48,12
+END
+
+IDD_TEXT_EDIT DIALOGEX 0, 0, 250, 200
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "Ms Shell Dlg", 0, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON "OK",IDOK,143,180,50,14
+    PUSHBUTTON "Cancel",IDCANCEL,197,180,50,14
+    EDITTEXT IDC_EDIT,6,6,240,168,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_WANTRETURN
+END
+
+IDD_PLUGIN_DISCOVERY_RESULTS DIALOGEX 0, 0, 220, 250
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Plugin Discovery Results"
+FONT 8, "Ms Shell Dlg", 0, 0, 0x0
+BEGIN
+END
+
+IDD_COREDBG DIALOGEX 0, 0, 213, 252
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_CAPTION | WS_SYSMENU
+CAPTION "CoreDbg"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    PUSHBUTTON      "Pause",IDC_COREDBG_TOGGLEPAUSE,6,6,48,18
+    PUSHBUTTON      "Advance",IDC_COREDBG_STEP,54,6,36,18
+    CONTROL         "RSP",IDC_COREDBG_RSP_TOGGLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,54,54,8
+    CONTROL         "Cartridge Tilt",IDC_COREDBG_CART_TILT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,42,72,8
+    LISTBOX         IDC_COREDBG_LIST,0,72,210,180,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_COMMAND_PALETTE DIALOGEX 0, 0, 200, 100
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_VISIBLE
+EXSTYLE WS_EX_COMPOSITED
+CAPTION ""
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT "Up/Down: Change selection, Enter: Invoke, F2: Bind Hotkey",IDC_COMMAND_PALETTE_TEXT,5,3,189,11,SS_CENTER
+    EDITTEXT IDC_COMMAND_PALETTE_EDIT,5,14,189,12,WS_TABSTOP | ES_AUTOHSCROLL
+    LISTBOX IDC_COMMAND_PALETTE_LIST,5,29,189,75,WS_TABSTOP | WS_VSCROLL | LBS_OWNERDRAWFIXED | LBS_NOTIFY
+END
+
+IDD_SEEKER DIALOGEX 0, 0, 211, 62
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Seeker"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Start",IDC_SEEKER_START,102,42,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,156,42,50,14
+    LTEXT           "Seek to frame",IDC_STATIC,7,7,46,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_SEEKER_FRAME,60,6,144,12,ES_AUTOHSCROLL
+    LTEXT           "",IDC_SEEKER_SUBTEXT,7,25,200,13,SS_CENTERIMAGE
+    LTEXT           "Idle",IDC_SEEKER_STATUS,7,42,91,13,SS_CENTERIMAGE
+END
+
+IDD_MOVIE_EDITOR DIALOGEX 0, 0, 255, 142
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,147,121,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,198,121,50,14
+    EDITTEXT        IDC_MOVIE_A_PATH,7,7,190,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Browse...",IDC_MOVIE_A_BROWSE,198,7,50,14
+    EDITTEXT        IDC_EDIT_MOVIE_AUTHOR,7,41,241,14,ES_AUTOHSCROLL
+    LTEXT           "Author",IDC_STATIC,7,27,113,14,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_MOVIE_AUTHOR2,7,76,241,37,ES_MULTILINE | ES_AUTOVSCROLL | ES_WANTRETURN | WS_VSCROLL
+    LTEXT           "Description",IDC_STATIC,7,61,100,14,SS_CENTERIMAGE
+END
+
+IDD_CHEATS DIALOGEX 0, 0, 271, 214
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Cheats"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LISTBOX         IDC_LIST_CHEATS,7,7,257,119,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT_CHEAT,7,141,257,49,ES_MULTILINE | ES_AUTOHSCROLL | ES_WANTRETURN | WS_VSCROLL
+    CONTROL         "Enabled",IDC_CHECK_CHEAT_ENABLED,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,174,192,38,14
+    PUSHBUTTON      "Add",IDC_NEW_CHEAT,7,126,59,14
+    PUSHBUTTON      "Apply",IDC_CHEAT_APPLY,214,192,50,14
+    EDITTEXT        IDC_EDIT_CHEAT_NAME,7,192,163,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Remove",IDC_REMOVE_CHEAT,67,126,45,14
+    LTEXT           "",IDC_CHEAT_STATUS,114,126,150,14,SS_CENTERIMAGE
+END
+
+IDD_PIANO_ROLL DIALOGEX 0, 0, 426, 320
+STYLE DS_SETFONT | DS_MODALFRAME | WS_SIZEBOX | WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Piano Roll"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "",IDC_LIST_PIANO_ROLL,105,7,241,275,NOT WS_VISIBLE | WS_BORDER
+    GROUPBOX        "Input",IDC_STATIC,7,7,95,275
+END
+
+IDD_LUA_MANAGER DIALOGEX 0, 0, 112, 217
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_SIZEBOX | WS_MAXIMIZEBOX
+EXSTYLE WS_EX_COMPOSITED | WS_EX_DLGMODALFRAME
+CAPTION "Lua Instances"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LISTBOX         IDC_INSTANCES,4,4,100,172,WS_TABSTOP | LBS_NOINTEGRALHEIGHT | LBS_NOTIFY | WS_VSCROLL
+    PUSHBUTTON      "Add Instance...",IDC_ADD_INSTANCE,4,180,100,14,WS_TABSTOP
+END
+
+IDD_LUA_INSTANCE DIALOGEX 0, 0, 220, 200
+STYLE DS_SETFONT | DS_FIXEDSYS | DS_CONTROL | WS_CHILD
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_PATH,4,4,152,14,WS_TABSTOP | ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "Browse...",IDC_BROWSE,160,4,50,14,WS_TABSTOP
+    PUSHBUTTON      "Clear",IDC_CLEAR,4,24,50,14,WS_TABSTOP
+    PUSHBUTTON      "Stop",IDC_STOP,56,24,50,14,WS_TABSTOP | WS_DISABLED
+    PUSHBUTTON      "Start",IDC_START,108,24,50,14,WS_TABSTOP | BS_SPLITBUTTON
+    EDITTEXT        IDC_LOG,4,44,208,149,WS_TABSTOP | ES_MULTILINE | ES_READONLY | WS_VSCROLL
+END
+
+IDD_LUA_INSTANCE_PLACEHOLDER DIALOGEX 0, 0, 220, 200
+STYLE DS_SETFONT | DS_FIXEDSYS | DS_CONTROL | WS_CHILD
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+        LTEXT       "Select a Lua Instance for more details.",IDC_STATIC,5,5,205,188,SS_CENTER | SS_CENTERIMAGE | SS_NOPREFIX
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_M64ICONBIG          ICON                    "icons\\logo_48.ico"
+
+IDI_AUSTRALIA           ICON                    "icons\\flag_au.ico"
+
+IDI_BETA                ICON                    "icons\\flag_beta.ico"
+
+IDI_DEMO                ICON                    "icons\\flag_demo.ico"
+
+IDI_EUROPE              ICON                    "icons\\flag_eu.ico"
+
+IDI_FRANCE              ICON                    "icons\\flag_fr.ico"
+
+IDI_GERMANY             ICON                    "icons\\flag_de.ico"
+
+IDI_ITALIA              ICON                    "icons\\flag_it.ico"
+
+IDI_JAPAN               ICON                    "icons\\flag_jp.ico"
+
+IDI_M64ICONSMALL        ICON                    "icons\\logo_16.ico"
+
+IDI_SPAIN               ICON                    "icons\\flag_sp.ico"
+
+IDI_UNKNOWN             ICON                    "icons\\flag_unknown.ico"
+
+IDI_USA                 ICON                    "icons\\flag_us.ico"
+
+IDI_DENY                ICON                    "icons\\deny.ico"
+
+IDI_CHANGED             ICON                    "icons\\changed.ico"
+
+IDI_CURRENT             ICON                    "icons\\current.ico"
+
+IDI_MARKER              ICON                    "icons\\marker.ico"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_ABOUT, DIALOG
+    BEGIN
+    END
+
+    IDD_LUAWINDOW, DIALOG
+    BEGIN
+    END
+
+    IDD_DIRECTORIES, DIALOG
+    BEGIN
+    END
+
+    IDD_SETTINGS_PLUGINS, DIALOG
+    BEGIN
+    END
+
+    IDD_SETTINGS_GENERAL, DIALOG
+    BEGIN
+    END
+
+    IDD_MOVIE_DIALOG, DIALOG
+    BEGIN
+    END
+
+    IDD_TEXT_EDIT, DIALOG
+    BEGIN
+    END
+
+    IDD_COREDBG, DIALOG
+    BEGIN
+        LEFTMARGIN, 4
+        RIGHTMARGIN, 209
+        VERTGUIDE, 57
+        BOTTOMMARGIN, 216
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_SETTINGS_GENERAL AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_COREDBG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_SETTINGS_PLUGINS AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIRECTORIES AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_TEXT_EDIT AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_LUAWINDOW AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_MOVIE_DIALOG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// RT_MANIFEST
+//
+
+1                       RT_MANIFEST             "app.manifest"
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include <Windows.h>\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+#endif    // Neutral (Default) resources
+/////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
