@@ -12,25 +12,10 @@ add_subdirectory(Common)
 # core API and headers
 add_subdirectory(Core)
 
-
 if (WIN32)
-    # VIEW
-    # ============================
-
-    add_subdirectory(Views.Win32)
-
-    # BUNDLED PLUGINS
-    # ============================
-    
-    # common settings
-    include("${CMAKE_CURRENT_LIST_DIR}/Plugins.Common.cmake")
-
-    # dummy plugins
-    add_subdirectory(Plugins.Audio.Dummy)
-    add_subdirectory(Plugins.Input.Dummy)
-    add_subdirectory(Plugins.RSP.Dummy)
-    add_subdirectory(Plugins.Video.Dummy)
-
-    # TAS RSP
-    add_subdirectory(Plugins.RSP.TAS)
+  # Plugins and Views of Windows
+  add_subdirectory(Win32)
+elseif (UNIX)
+  # Plugins and Views of Unix
+  add_subdirectory(Unix)
 endif()
