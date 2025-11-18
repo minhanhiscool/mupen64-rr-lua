@@ -30,10 +30,11 @@ set_target_properties(Mupen64RR.Plugins.RSP.TAS PROPERTIES
     PDB_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 )
 target_include_directories(Mupen64RR.Plugins.RSP.TAS PRIVATE ".")
-target_link_libraries(Mupen64RR.Plugins.RSP.TAS PRIVATE Mupen64RR.Plugins.Win32.Common)
+target_link_libraries(Mupen64RR.Plugins.RSP.TAS PRIVATE Mupen64RR.Plugins.Unix.Common)
 target_link_libraries(Mupen64RR.Plugins.RSP.TAS PRIVATE
     Comctl32
     uxtheme
     Msimg32
     Gdiplus
+    imgui
 )

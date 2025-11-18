@@ -8,7 +8,11 @@
 
 #include <CommonPCH.h>
 #include <core_api.h>
-#include <Views.Win32/ViewPlugin.h>
+#include <SDL3/SDL.h>
+#include "imgui.h"
+#include "imgui_impl_sdl3.h"
+#include "imgui_impl_opengl3.h"
+// #include <Views.Unix/ViewPlugin.h>
 #include <resource.h>
 
 #define PLUGIN_VERSION "1.0.1"
@@ -29,7 +33,7 @@
 
 extern HINSTANCE g_instance;
 extern std::filesystem::path g_app_path;
-extern core_plugin_extended_funcs* g_ef;
+extern core_plugin_extended_funcs *g_ef;
 
 bool rsp_alive();
 void on_rom_closed();

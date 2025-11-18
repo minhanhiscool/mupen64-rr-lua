@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2025, Mupen64 maintainers, contributors, and original authors (Hacktarux, ShadowPrince, linker).
- *
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
@@ -17,6 +16,7 @@ struct t_config
 };
 
 extern t_config config;
+extern bool show_config;
 
 /**
  * \brief Saves the config
@@ -28,4 +28,4 @@ void config_save();
  */
 void config_load();
 
-void config_show_dialog(HWND hwnd);
+void config_show_dialog();

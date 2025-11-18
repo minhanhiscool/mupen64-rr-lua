@@ -1,5 +1,4 @@
-/*
- * Copyright (c) 2025, Mupen64 maintainers, contributors, and original authors (Hacktarux, ShadowPrince, linker).
+/* Copyright (c) 2025, Mupen64 maintainers, contributors, and original authors (Hacktarux, ShadowPrince, linker).
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
@@ -7,108 +6,116 @@
 #include "Main.h"
 #include "Config.h"
 
-#define SUBKEY L"Software\\N64 Emulation\\DLL\\TAS RSP"
-#define CONFIG_VALUE L"Config"
+#define FILE "DLL/TAS_RSP.ini"
+#define CONFIG_VALUE "Config"
 
 t_config config = {};
 t_config default_config = {};
 t_config prev_config = {};
+t_config working_config = {};
 
-INT_PTR CALLBACK ConfigDlgProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
+bool show_config = false;
+
+std::string get_config_path()
 {
-    switch (Message)
+    const char *path = SDL_GetPrefPath("Mupen64", "mupen64-rr-lua");
+    if (path == NULL)
     {
-    case WM_INITDIALOG:
-        config_load();
-        memcpy(&prev_config, &config, sizeof(t_config));
-        CheckDlgButton(hwnd, IDC_UCODE_CACHE_VERIFY, config.ucode_cache_verify ? BST_CHECKED : BST_UNCHECKED);
-        break;
-    case WM_CLOSE:
-        config_save();
-        EndDialog(hwnd, IDOK);
-        break;
-    case WM_COMMAND:
-        switch (LOWORD(wParam))
-        {
-        case IDOK:
-            config.ucode_cache_verify = IsDlgButtonChecked(hwnd, IDC_UCODE_CACHE_VERIFY);
-            config_save();
-            EndDialog(hwnd, IDOK);
-            break;
-        case IDCANCEL:
-            memcpy(&config, &prev_config, sizeof(t_config));
-            config_save();
-            EndDialog(hwnd, IDCANCEL);
-            break;
-        default:
-            break;
-        }
-        break;
-    default:
-        break;
+        return "";
     }
-    return FALSE;
+    std::string path_str = std::string(path) + FILE;
+    SDL_free(&path);
+    return path_str;
+}
+
+void dialog_function()
+{
+    if (ImGui::BeginPopupModal("RSP Config", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+    {
+
+        bool verify = config.ucode_cache_verify != 0;
+        if (ImGui::Checkbox("Verify Ucode Cache", &verify))
+        {
+            working_config.ucode_cache_verify = verify ? 1 : 0;
+        }
+
+        ImGui::Separator();
+        if (ImGui::Button("OK"))
+        {
+            config = working_config;
+            config_save();
+            ImGui::CloseCurrentPopup();
+            show_config = false;
+        }
+        if (ImGui::Button("Cancel"))
+        {
+            working_config = config;
+            ImGui::CloseCurrentPopup();
+            show_config = false;
+        }
+
+        ImGui::EndPopup();
+    }
 }
 
 void config_save()
 {
-    g_ef->log_trace(L"Saving config...");
-
-    HKEY h_key{};
-
-    if (RegCreateKeyEx(HKEY_CURRENT_USER, SUBKEY, 0, NULL, 0, KEY_WRITE, NULL, &h_key, NULL) != ERROR_SUCCESS)
+    g_ef->log_trace("Saving config...");
+    std::string path = get_config_path();
+    if (path.empty())
     {
-        g_ef->log_error(L"RegCreateKeyEx failed");
+        g_ef->log_error("Could not get config path");
         return;
     }
-
-    if (RegSetValueEx(h_key, CONFIG_VALUE, 0, REG_BINARY, reinterpret_cast<const BYTE *>(&config), sizeof(t_config)) !=
-        ERROR_SUCCESS)
+    SDL_IOStream *file = SDL_IOFromFile(path.c_str(), "wb");
+    if (!file)
     {
-        g_ef->log_error(L"RegSetValueEx failed");
-        RegCloseKey(h_key);
+        g_ef->log_error("Could not open config file");
         return;
     }
-
-    RegCloseKey(h_key);
+    if (SDL_WriteIO(file, &config, sizeof(t_config)) < sizeof(t_config))
+    {
+        g_ef->log_error("Could not write config file");
+        return;
+    }
+    SDL_CloseIO(file);
 }
 
 void config_load()
 {
-    g_ef->log_trace(L"Loading config...");
-
-    HKEY h_key{};
-    DWORD size = sizeof(t_config);
-
-    if (RegOpenKeyEx(HKEY_CURRENT_USER, SUBKEY, 0, KEY_READ, &h_key) != ERROR_SUCCESS)
+    g_ef->log_trace("Loading config...");
+    std::string path = get_config_path();
+    if (path.empty())
     {
-        g_ef->log_error(L"RegCreateKeyEx failed");
+        g_ef->log_error("Could not get config path");
+        return;
+    }
+    SDL_IOStream *file = SDL_IOFromFile(path.c_str(), "rb");
+    if (!file)
+    {
+        g_ef->log_error("Could not open config file");
         return;
     }
 
     t_config loaded_config{};
-
-    if (RegQueryValueEx(h_key, CONFIG_VALUE, nullptr, nullptr, reinterpret_cast<BYTE *>(&loaded_config), &size) !=
-            ERROR_SUCCESS ||
-        size != sizeof(t_config))
+    if (SDL_ReadIO(file, &loaded_config, sizeof(t_config)) != sizeof(t_config))
     {
-        g_ef->log_error(L"RegQueryValueEx failed");
-        RegCloseKey(h_key);
+        g_ef->log_error("Could not read config file completely");
         return;
     }
+    SDL_CloseIO(file);
 
-    RegCloseKey(h_key);
-
-    if (loaded_config.version < default_config.version)
+    if (loaded_config.version != default_config.version)
     {
-        g_ef->log_trace(L"Outdated config version, using default");
+        g_ef->log_trace("Config version mismatch. Loading default config.");
         loaded_config = default_config;
     }
-
     config = loaded_config;
 }
 
-void config_show_dialog(HWND hwnd)
+void config_show_dialog()
 {
-    DialogBox(g_instance, MAKEINTRESOURCE(IDD_RSPCONFIG), hwnd, ConfigDlgProc);
+    working_config = config;
+    show_config = true;
+    ImGui::OpenPopup("RSP Config");
 }
