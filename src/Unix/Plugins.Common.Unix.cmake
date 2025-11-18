@@ -9,6 +9,7 @@ add_library(Mupen64RR.Plugins.Unix.Common INTERFACE)
 target_link_libraries(Mupen64RR.Plugins.Unix.Common INTERFACE
     Mupen64RR.Common
     Mupen64RR.Core.Headers
+    # TODO: implement Views.Unix
     # Mupen64RR.Views.Unix.Headers
 )
 target_compile_definitions(Mupen64RR.Plugins.Unix.Common INTERFACE PLUGIN_WITH_CALLBACKS)

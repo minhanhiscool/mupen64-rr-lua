@@ -15,11 +15,11 @@ extern "C" void GetSoInfo(core_plugin_info *info)
 
 extern "C" void SoAbout(void *hParent)
 {
-    const auto msg = PLUGIN_NAME L"\n"
-                                 L"Part of the Mupen64 project family."
-                                 L"\n\n"
-                                 L"https://github.com/mupen64/mupen64-rr-lua";
-    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, L"About", msg, (SDL_Window *)hParent);
+    const auto msg = PLUGIN_NAME "\n"
+                                 "Part of the Mupen64 project family."
+                                 "\n\n"
+                                 "https://github.com/mupen64/mupen64-rr-lua";
+    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "About", msg, (SDL_Window *)hParent);
 }
 __attribute__((constructor)) void load()
 {
