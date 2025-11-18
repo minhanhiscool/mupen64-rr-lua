@@ -21,3 +21,5 @@ add_library(vendor::mini ALIAS mini)
 
 add_subdirectory(xxhash64)
 add_library(vendor::xxhash64 ALIAS xxhash64)
+
+add_subdirectory(SDL)

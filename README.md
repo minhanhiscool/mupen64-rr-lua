@@ -3,7 +3,7 @@
 </p>
 
 <h1 align="center">
-  Mupen64
+  Mupen64 - Linux port
 </h1>
 
 <p align="center">
@@ -18,8 +18,9 @@
 
 # Quickstart
 
-The easiest way to get started using Mupen64 is by visiting the [Mupen64 Homepage](https://mupen64.com) and downloading the repack there.
+This is a (attempted?) Linux port of Mupen64-rr-lua.
 
-If any issues arise or you need help, join the [Mupen64 Community Discord](https://discord.gg/eZXbmguKEq).
+Many, many stuff will break so build at your own discretion.
 
-Cutting-edge features with potential instability are available for download as a zipped binary under the latest commit's artifact.
+ofc its a WIP so wait i guess.
+
