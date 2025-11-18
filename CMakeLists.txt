@@ -24,10 +24,15 @@ if (NOT "${CMAKE_SYSTEM_PROCESSOR}" MATCHES "^(x86|i[346]86)$")
 endif()
 
 # The Windows view can, of course, only be compiled on Windows. 
+# Same goes for Linux, as only Linux can compile the Unix view.
 # This is in place to allow future frontends to be written separately.
 set(MUPEN64RR_BUILD_WIN32 ON CACHE BOOL "If on, enables the Win32 view and plugins.")
+set(MUPEN64RR_BUILD_UNIX ON CACHE BOOL "If on, enables the Unix view and plugins.")
 if (NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
   set(MUPEN64RR_BUILD_WIN32 OFF CACHE BOOL "If on, enables the Win32 view and plugins. (FORCE-DISABLED)" FORCE)
+endif()
+if (NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
+  set(MUPEN64RR_BUILD_UNIX OFF CACHE BOOL "If on, enables the Unix view and plugins. (FORCE-DISABLED)" FORCE)
 endif()
 
 # Basic checks and setup
