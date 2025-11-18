@@ -18,7 +18,7 @@
 
 # Quickstart
 
-This is a (attempted?) Linux port of Mupen64-rr-lua.
+This is a Linux port of Mupen64-rr-lua with the SDL3 frontend.
 
 Many, many stuff will break so build at your own discretion.
 

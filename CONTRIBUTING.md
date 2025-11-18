@@ -21,9 +21,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 ```
 
 # Compiling
-Only Windows is supported for now, though the CMake infrastructure is intended to ease the development of cross-platform code (for whoever decides to work on that).
+This is a *Linux* port, but code for Windows is also available. Therefore we will provide instructions for both. 
 
-## Windows/CMake
+## Windows/CMake (per [upstream's instructions](https://github.com/mupen64/mupen64-rr-lua?tab=contributing-ov-file#windowscmake))
 You'll need:
 - Visual Studio (for the compiler, CMake, Ninja and vcpkg)
 
@@ -42,6 +42,23 @@ Presets have been provided for building and testing. These are intended for IDEs
 
 ### Visual Studio Code + CMake Tools
 You'll need to enable `"cmake.useVsDeveloperEnvironment": "always"` in your workspace settings to convince CMake Tools to set up a VS developer environment.
+
+## Linux
+You'll need:
+- a C++ compiler (gcc, clang, etc.)
+- CMake >= 3.22.1
+- Ninja
+
+Use your favorite package manager to install them
+
+To build, pass these commands to the terminal:
+``` sh
+mkdir build && cd build
+cmake .. --preset sys-linux64-x64
+ninja -j$(nproc)
+```
+
+Similarly, run the tests by passing `ctest`.
 
 ## CMake Options
 | OPTION                    | DESCRIPTION                                                           |
