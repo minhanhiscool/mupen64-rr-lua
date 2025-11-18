@@ -90,6 +90,11 @@ if(LUA_FOUND AND NOT TARGET Lua::Lua)
   )
 endif()
 
+if (NOT WIN32)
+  find_package(SDL3 REQUIRED)
+  find_package(OpenGL REQUIRED)
+endif()
+
 # CMake modules
 # =======================================
 include(CTest)

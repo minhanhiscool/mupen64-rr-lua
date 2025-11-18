@@ -47,6 +47,8 @@ You'll need to enable `"cmake.useVsDeveloperEnvironment": "always"` in your work
 You'll need:
 - a C++ compiler (gcc, clang, etc.)
 - CMake >= 3.22.1
+- SDL3 and OpenGL development libraries
+- PkgConfig (or alternatives like pkgconf)
 - Ninja
 
 Use your favorite package manager to install them
