@@ -6,18 +6,18 @@
 
 #pragma once
 
-#define PLUGIN_VERSION L"1.0.0"
+#define PLUGIN_VERSION "1.0.0"
 
 #ifdef _M_X64
-#define PLUGIN_ARCH L" x64"
+#define PLUGIN_ARCH " x64"
 #else
-#define PLUGIN_ARCH L" "
+#define PLUGIN_ARCH " "
 #endif
 
 #ifdef _DEBUG
-#define PLUGIN_TARGET L" Debug"
+#define PLUGIN_TARGET " Debug"
 #else
-#define PLUGIN_TARGET L" "
+#define PLUGIN_TARGET " "
 #endif
 
-#define PLUGIN_NAME L"No RSP " PLUGIN_VERSION PLUGIN_ARCH PLUGIN_TARGET
+#define PLUGIN_NAME "No RSP " PLUGIN_VERSION PLUGIN_ARCH PLUGIN_TARGET

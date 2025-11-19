@@ -5,7 +5,7 @@
  */
 
 #include "Main.h"
-#include "hle.h"
+#include "HLE.h"
 
 /******** DMEM Memory Map for ABI 1 ***************
 Address/Range		Description
@@ -123,7 +123,7 @@ static void ENVMIXER()
     int32_t AuxR;
     int32_t AuxL;
     int i1, o1, a1, a2, a3;
-    WORD AuxIncRate = 1;
+    unsigned short AuxIncRate = 1;
     short zero[8];
     memset(zero, 0, 16);
     int32_t LVol, RVol;
@@ -358,7 +358,7 @@ static void ENVMIXERo()
     int AuxR;
     int AuxL;
 
-    WORD AuxIncRate = 1;
+    unsigned short AuxIncRate = 1;
     short zero[8];
     memset(zero, 0, 16);
     if (flags & A_INIT)
@@ -431,11 +431,11 @@ static void ENVMIXERo()
 
 static void RESAMPLE()
 {
-    BYTE Flags = (uint8_t)((inst1 >> 16) & 0xff);
-    DWORD Pitch = ((inst1 & 0xffff)) << 1;
+    unsigned char Flags = (uint8_t)((inst1 >> 16) & 0xff);
+    uint32_t Pitch = ((inst1 & 0xffff)) << 1;
     uint32_t addy = (inst2 & 0xffffff); // + SEGMENTS[(inst2>>24)&0xf];
-    DWORD Accum = 0;
-    DWORD location;
+    uint32_t Accum = 0;
+    uint32_t location;
     int16_t *lut, *lut2;
     short *dst;
     int16_t *src;
@@ -550,18 +550,18 @@ static void SETLOOP()
 static void ADPCM()
 {
     // Work in progress! :)
-    BYTE Flags = (uint8_t)(inst1 >> 16) & 0xff;
-    WORD Gain = (uint16_t)(inst1 & 0xffff);
-    DWORD Address = (inst2 & 0xffffff); // + SEGMENTS[(inst2>>24)&0xf];
-    WORD inPtr = 0;
+    unsigned char Flags = (uint8_t)(inst1 >> 16) & 0xff;
+    unsigned short Gain = (uint16_t)(inst1 & 0xffff);
+    uint32_t Address = (inst2 & 0xffffff); // + SEGMENTS[(inst2>>24)&0xf];
+    unsigned short inPtr = 0;
     short *out = (short *)(BufferSpace + AudioOutBuffer);
-    BYTE *in = (BYTE *)(BufferSpace + AudioInBuffer);
+    unsigned char *in = (unsigned char *)(BufferSpace + AudioInBuffer);
     short count = (short)AudioCount;
-    BYTE icode;
-    BYTE code;
+    unsigned char icode;
+    unsigned char code;
     int vscale;
-    WORD index;
-    WORD j;
+    unsigned short index;
+    unsigned short j;
     int a[8];
     short *book1, *book2;
     memset(out, 0, 32);

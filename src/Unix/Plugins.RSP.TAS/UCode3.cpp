@@ -9,8 +9,8 @@
 
 static void SPNOOP()
 {
-    MessageBox(nullptr, std::format(L"Unknown/Unimplemented Audio Command {} in ABI 3", inst1 >> 24).c_str(),
-               L"Audio HLE Error", MB_OK);
+    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Audio HLE Error",
+                             std::format("Unknown/Unimplemented Audio Command {} in ABI 3", inst1 >> 24).c_str(), NULL);
 }
 
 extern uint16_t ResampleLUT[0x200];
@@ -75,7 +75,7 @@ static void ENVMIXER3()
     int32_t AuxR;
     int32_t AuxL;
     int i1, o1, a1, a2, a3;
-    WORD AuxIncRate = 1;
+    unsigned short AuxIncRate = 1;
     short zero[8];
     memset(zero, 0, 16);
 
@@ -246,10 +246,11 @@ static void ENVMIXER3o()
     //  ********* Make sure these conditions are met... ***********
     if ((AudioInBuffer | AudioOutBuffer | AudioAuxA | AudioAuxC | AudioAuxE | AudioCount) & 0x3)
     {
-        MessageBox(NULL,
-                   L"Unaligned EnvMixer... please report this to Azimer with the following information: RomTitle, "
-                   L"Place in the rom it occurred, and any save state just before the error",
-                   L"AudioHLE Error", MB_OK);
+        SDL_ShowSimpleMessageBox(
+            SDL_MESSAGEBOX_ERROR, "AudioHLE Error",
+            "Unaligned EnvMixer... please report this to Azimer with the following information: RomTitle, "
+            "Place in the rom it occurred, and any save state just before the error",
+            NULL);
     }
 
     short *inp = (short *)(BufferSpace + 0x4F0);
@@ -263,7 +264,7 @@ static void ENVMIXER3o()
     int AuxR;
     int AuxL;
     int i1, o1, a1, a2, a3;
-    WORD AuxIncRate = 1;
+    unsigned short AuxIncRate = 1;
     short zero[8];
     memset(zero, 0, 16);
     int32_t LVol, RVol;
@@ -505,19 +506,19 @@ static void SETLOOP3()
 static void ADPCM3()
 {
     // Verified to be 100% Accurate...
-    BYTE Flags = (uint8_t)(inst2 >> 0x1c) & 0xff;
+    unsigned char Flags = (uint8_t)(inst2 >> 0x1c) & 0xff;
     // WORD Gain=(uint16_t)(inst1&0xffff);
-    DWORD Address = (inst1 & 0xffffff); // + SEGMENTS[(inst2>>24)&0xf];
-    WORD inPtr = (inst2 >> 12) & 0xf;
+    uint32_t Address = (inst1 & 0xffffff); // + SEGMENTS[(inst2>>24)&0xf];
+    unsigned short inPtr = (inst2 >> 12) & 0xf;
     // short *out=(int16_t *)(testbuff+(AudioOutBuffer>>2));
     short *out = (short *)(BufferSpace + (inst2 & 0xfff) + 0x4f0);
-    BYTE *in = (BYTE *)(BufferSpace + ((inst2 >> 12) & 0xf) + 0x4f0);
+    unsigned char *in = (unsigned char *)(BufferSpace + ((inst2 >> 12) & 0xf) + 0x4f0);
     short count = (short)((inst2 >> 16) & 0xfff);
-    BYTE icode;
-    BYTE code;
+    unsigned char icode;
+    unsigned char code;
     int vscale;
-    WORD index;
-    WORD j;
+    unsigned short index;
+    unsigned short j;
     int a[8];
     short *book1, *book2;
 
@@ -758,11 +759,11 @@ static void ADPCM3()
 
 static void RESAMPLE3()
 {
-    BYTE Flags = (uint8_t)((inst2 >> 0x1e));
-    DWORD Pitch = ((inst2 >> 0xe) & 0xffff) << 1;
+    unsigned char Flags = (uint8_t)((inst2 >> 0x1e));
+    uint32_t Pitch = ((inst2 >> 0xe) & 0xffff) << 1;
     uint32_t addy = (inst1 & 0xffffff);
-    DWORD Accum = 0;
-    DWORD location;
+    uint32_t Accum = 0;
+    uint32_t location;
     int16_t *lut;
     short *dst;
     int16_t *src;
@@ -942,7 +943,7 @@ static void MP3ADDY()
 extern "C"
 {
     void rsp_run();
-    void mp3setup(DWORD inst1, DWORD inst2, DWORD t8);
+    void mp3setup(uint32_t inst1, uint32_t inst2, uint32_t t8);
 }
 
 extern uint32_t base, dmembase;

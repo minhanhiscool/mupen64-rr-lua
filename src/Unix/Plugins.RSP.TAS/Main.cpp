@@ -8,7 +8,6 @@
 #include "Config.h"
 #include "HLE.h"
 #include "Disasm.h"
-
 #define EXPORT __declspec(dllexport)
 #define CALL _cdecl
 
@@ -25,7 +24,7 @@ void (*ABI[0x20])();
 uint32_t inst1;
 uint32_t inst2;
 void (*g_audio_ucode_func)() = nullptr;
-HINSTANCE g_instance;
+int g_instance;
 std::filesystem::path g_app_path;
 // PlatformService g_platform_service;
 static uint8_t fake_header[0x1000];
@@ -36,20 +35,20 @@ static uint32_t fake_AI_STATUS_REG;
 static uint32_t fake_AI_DACRATE_REG;
 static uint32_t fake_AI_BITRATE_REG;
 
-static void log_shim(const wchar_t* str)
+static void log_shim(const char *str)
 {
-    wprintf(str);
+    printf("%s", str);
 }
 
 static core_plugin_extended_funcs ef_shim = {
-.size = sizeof(core_plugin_extended_funcs),
-.log_trace = log_shim,
-.log_info = log_shim,
-.log_warn = log_shim,
-.log_error = log_shim,
+    .size = sizeof(core_plugin_extended_funcs),
+    .log_trace = log_shim,
+    .log_info = log_shim,
+    .log_warn = log_shim,
+    .log_error = log_shim,
 };
 
-core_plugin_extended_funcs* g_ef = &ef_shim;
+core_plugin_extended_funcs *g_ef = &ef_shim;
 
 /**
  * \brief Loads the audio plugin's globals
@@ -60,9 +59,9 @@ void *plugin_load(const std::filesystem::path &path);
 
 void handle_unknown_task(const OSTask_t *task, const uint32_t sum)
 {
-    const auto message = std::format(L"unknown task:\n\ttype: {}\n\tsum: {}\n\tPC: {}", task->type, sum,
+    const auto message = std::format("unknown task:\n\ttype: {}\n\tsum: {}\n\tPC: {}", task->type, sum,
                                      static_cast<void *>(rsp.sp_pc_reg));
-    MessageBox(NULL, message.c_str(), L"unknown task", MB_OK);
+    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "unknown task", message.c_str(), NULL);
 
     FILE *f;
 
@@ -291,7 +290,8 @@ uint32_t do_rsp_cycles(uint32_t Cycles)
                 jpg_uncompress(task);
                 return Cycles;
             default:
-                MessageBox(NULL, std::format(L"unknown jpeg: sum: {}", sum).c_str(), L"Error", MB_OK | MB_ICONERROR);
+                SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error",
+                                         std::format("unknown jpeg: sum: {}", sum).c_str(), NULL);
                 break;
             }
             break;
@@ -305,10 +305,9 @@ uint32_t do_rsp_cycles(uint32_t Cycles)
 
 std::filesystem::path get_app_full_path()
 {
-    char path[MAX_PATH] = {0};
-
-    const DWORD len = GetModuleFileNameA(nullptr, path, MAX_PATH);
-    if (len == 0 || len == MAX_PATH)
+    char path[PATH_MAX] = {0};
+    size_t len = readlink("/proc/self/exe", path, PATH_MAX);
+    if (len == -1)
     {
         return {};
     }
@@ -324,44 +323,28 @@ char *getExtension(char *str)
         return NULL;
 }
 
-BOOL APIENTRY DllMain(HINSTANCE hinst, DWORD reason, LPVOID)
+extern "C" void SoAbout(SDL_Window *parent)
 {
-    switch (reason)
-    {
-    case DLL_PROCESS_ATTACH:
-        g_instance = hinst;
-        g_app_path = get_app_full_path();
-        config_load();
-        break;
-    default:
-        break;
-    }
+    const auto msg = PLUGIN_NAME "\n"
+                                 "Part of the Mupen64 project family."
+                                 "\n\n"
+                                 "https://github.com/mupen64/mupen64-rr-lua";
 
-    return TRUE;
+    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "About", msg, parent);
 }
 
-EXPORT void CALL DllAbout(void *hwnd)
-{
-    const auto msg = PLUGIN_NAME L"\n"
-                                 L"Part of the Mupen64 project family."
-                                 L"\n\n"
-                                 L"https://github.com/mupen64/mupen64-rr-lua";
-
-    MessageBox((HWND)hwnd, msg, L"About", MB_ICONINFORMATION | MB_OK);
-}
-
-EXPORT void CALL DllConfig(void *hwnd)
+extern "C" void SoConfig(SDL_Window *parent)
 {
     if (rsp_alive())
     {
-        MessageBox((HWND)hwnd, L"Close the ROM before configuring the plugin.", L"Error", MB_OK | MB_ICONERROR);
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "Close the ROM before configuring the plugin.", parent);
         return;
     }
 
-    config_show_dialog((HWND)hwnd);
+    config_show_dialog();
 }
 
-EXPORT void CALL GetDllInfo(core_plugin_info *PluginInfo)
+extern "C" void GetSoInfo(core_plugin_info *PluginInfo)
 {
     PluginInfo->ver = 0x0101;
     PluginInfo->type = (int16_t)plugin_rsp;
@@ -370,22 +353,29 @@ EXPORT void CALL GetDllInfo(core_plugin_info *PluginInfo)
     PluginInfo->unused_byteswapped = 1;
 }
 
-EXPORT void CALL InitiateRSP(core_rsp_info Rsp_Info, uint32_t *CycleCount)
+extern "C" void InitiateRSP(core_rsp_info Rsp_Info, uint32_t *CycleCount)
 {
     rsp = Rsp_Info;
 }
 
-EXPORT void CALL RomClosed()
+extern "C" void RomClosed()
 {
     on_rom_closed();
 }
 
-EXPORT uint32_t CALL DoRspCycles(uint32_t Cycles)
+extern "C" uint32_t DoRspCycles(uint32_t Cycles)
 {
     return do_rsp_cycles(Cycles);
 }
 
-EXPORT void CALL ReceiveExtendedFuncs(core_plugin_extended_funcs* funcs)
+extern "C" void ReceiveExtendedFuncs(core_plugin_extended_funcs *funcs)
 {
     g_ef = funcs;
+}
+__attribute__((constructor)) void load()
+{
+}
+
+__attribute__((destructor)) void unload()
+{
 }

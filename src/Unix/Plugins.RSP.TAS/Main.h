@@ -9,11 +9,12 @@
 #include <CommonPCH.h>
 #include <core_api.h>
 #include <SDL3/SDL.h>
+#include <SDL3/SDL_opengl.h>
 #include "imgui.h"
 #include "imgui_impl_sdl3.h"
 #include "imgui_impl_opengl3.h"
+
 // #include <Views.Unix/ViewPlugin.h>
-#include <resource.h>
 
 #define PLUGIN_VERSION "1.0.1"
 
@@ -31,7 +32,36 @@
 
 #define PLUGIN_NAME "TAS RSP " PLUGIN_VERSION PLUGIN_ARCH PLUGIN_TARGET
 
-extern HINSTANCE g_instance;
+// HACK: Please remove this struct after View.Unix is implemented
+
+struct core_plugin_extended_funcs
+{
+    /**
+     * \brief Size of the structure in bytes.
+     */
+    uint32_t size;
+
+    /**
+     * \brief Logs the specified message at the trace level.
+     */
+    void (*log_trace)(const char *);
+
+    /**
+     * \brief Logs the specified message at the info level.
+     */
+    void (*log_info)(const char *);
+
+    /**
+     * \brief Logs the specified message at the warning level.
+     */
+    void (*log_warn)(const char *);
+
+    /**
+     * \brief Logs the specified message at the error level.
+     */
+    void (*log_error)(const char *);
+};
+
 extern std::filesystem::path g_app_path;
 extern core_plugin_extended_funcs *g_ef;
 

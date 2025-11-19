@@ -9,7 +9,6 @@ add_library(Mupen64RR.Plugins.RSP.TAS MODULE
     "HLE.h"
     "Disasm.h"
     "Config.h"
-    "Resource.h"
 
     "JPEG.cpp"
     "Main.cpp"
@@ -20,7 +19,6 @@ add_library(Mupen64RR.Plugins.RSP.TAS MODULE
     "UCode3.cpp"
     "MP3.cpp"
 
-    "Resource.rc"
 )
 set_target_properties(Mupen64RR.Plugins.RSP.TAS PROPERTIES
     CXX_STANDARD 23
@@ -32,9 +30,6 @@ set_target_properties(Mupen64RR.Plugins.RSP.TAS PROPERTIES
 target_include_directories(Mupen64RR.Plugins.RSP.TAS PRIVATE ".")
 target_link_libraries(Mupen64RR.Plugins.RSP.TAS PRIVATE Mupen64RR.Plugins.Unix.Common)
 target_link_libraries(Mupen64RR.Plugins.RSP.TAS PRIVATE
-    Comctl32
-    uxtheme
-    Msimg32
-    Gdiplus
     imgui
+    OpenGL::GL
 )

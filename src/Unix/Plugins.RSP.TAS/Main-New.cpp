@@ -10,37 +10,25 @@
 #include <Main.h>
 
 // PlatformService platform_service;
-
-// ReSharper disable once CppInconsistentNaming
-BOOL APIENTRY DllMain(HMODULE hmod, const DWORD reason, LPVOID)
-{
-    switch (reason)
-    {
-    case DLL_PROCESS_ATTACH:
-    case DLL_THREAD_ATTACH:
-    case DLL_THREAD_DETACH:
-    case DLL_PROCESS_DETACH:
-        break;
-    default:
-        break;
-    }
-
-    return TRUE;
-}
-
-EXPORT void CALL GetDllInfo(core_plugin_info *info)
+extern "C" void GetSoInfo(core_plugin_info *info)
 {
     info->ver = 0x0101;
     info->type = plugin_rsp;
-    strncpy_s(info->name, PLUGIN_NAME, std::size(info->name));
+    strncpy(info->name, PLUGIN_NAME, std::size(info->name));
 }
 
-EXPORT void CALL DllAbout(void *hParent)
+extern "C" void SoAbout(void *hParent)
 {
-    const auto msg = PLUGIN_NAME L"\n"
-                                 L"Part of the Mupen64 project family."
-                                 L"\n\n"
-                                 L"https://github.com/mupen64/mupen64-rr-lua";
+    const auto msg = PLUGIN_NAME "\n"
+                                 "Part of the Mupen64 project family."
+                                 "\n\n"
+                                 "https://github.com/mupen64/mupen64-rr-lua";
+    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "About", msg, (SDL_Window *)hParent);
+}
 
-    MessageBox((HWND)hParent, msg, L"About", MB_ICONINFORMATION | MB_OK);
+__attribute__((constructor)) void load()
+{
+}
+__attribute__((destructor)) void unload()
+{
 }

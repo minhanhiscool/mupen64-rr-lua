@@ -5,7 +5,7 @@
  */
 
 #include "Main.h"
-#include "hle.h"
+#include "HLE.h"
 
 static struct
 {
@@ -28,7 +28,7 @@ void jpg_uncompress(OSTask_t *task)
     short *data = (short *)(rsp.rdram + task->ucode_data);
     short m[8 * 32];
 
-    if (!task->flags & 1)
+    if (!(task->flags & 1))
     {
         memcpy(&jpg_data, rsp.rdram + task->data_ptr, task->data_size);
         q[0] = (short *)(rsp.rdram + jpg_data.m1);
@@ -48,7 +48,7 @@ void jpg_uncompress(OSTask_t *task)
     }
     else
     {
-        MessageBox(NULL, L"jpg_uncompress: !flags", L"Error", MB_OK | MB_ICONERROR);
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "jpg_uncompress: !flags", NULL);
     }
     pic = (short *)(rsp.rdram + jpg_data.pic);
 

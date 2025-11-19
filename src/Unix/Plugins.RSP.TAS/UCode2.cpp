@@ -11,8 +11,8 @@ extern uint8_t BufferSpace[0x10000];
 
 static void SPNOOP()
 {
-    MessageBox(NULL, std::format(L"Unknown/Unimplemented Audio Command {} in ABI 2", inst1 >> 24).c_str(),
-               L"Audio HLE Error", MB_OK);
+    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Audio HLE Error",
+                             std::format("Unknown/Unimplemented Audio Command {} in ABI 2", inst1 >> 24).c_str(), NULL);
 }
 
 extern uint16_t AudioInBuffer;  // 0x0000(T8)
@@ -67,19 +67,19 @@ static void SETBUFF2()
 static void ADPCM2()
 {
     // Verified to be 100% Accurate...
-    BYTE Flags = (uint8_t)(inst1 >> 16) & 0xff;
-    WORD Gain = (uint16_t)(inst1 & 0xffff);
-    DWORD Address = (inst2 & 0xffffff); // + SEGMENTS[(inst2>>24)&0xf];
-    WORD inPtr = 0;
+    unsigned char Flags = (uint8_t)(inst1 >> 16) & 0xff;
+    unsigned short Gain = (uint16_t)(inst1 & 0xffff);
+    uint32_t Address = (inst2 & 0xffffff); // + SEGMENTS[(inst2>>24)&0xf];
+    unsigned short inPtr = 0;
     // short *out=(int16_t *)(testbuff+(AudioOutBuffer>>2));
     short *out = (short *)(BufferSpace + AudioOutBuffer);
-    BYTE *in = (BYTE *)(BufferSpace + AudioInBuffer);
+    unsigned char *in = (unsigned char *)(BufferSpace + AudioInBuffer);
     short count = (short)AudioCount;
-    BYTE icode;
-    BYTE code;
+    unsigned char icode;
+    unsigned char code;
     int vscale;
-    WORD index;
-    WORD j;
+    unsigned short index;
+    unsigned short j;
     int a[8];
     short *book1, *book2;
 
@@ -424,11 +424,11 @@ static void MIXER2()
 
 static void RESAMPLE2()
 {
-    BYTE Flags = (uint8_t)((inst1 >> 16) & 0xff);
-    DWORD Pitch = ((inst1 & 0xffff)) << 1;
+    unsigned char Flags = (uint8_t)((inst1 >> 16) & 0xff);
+    uint32_t Pitch = ((inst1 & 0xffff)) << 1;
     uint32_t addy = (inst2 & 0xffffff); // + SEGMENTS[(inst2>>24)&0xf];
-    DWORD Accum = 0;
-    DWORD location;
+    uint32_t Accum = 0;
+    uint32_t location;
     int16_t *lut;
     short *dst;
     int16_t *src;
@@ -682,11 +682,11 @@ static void ENVMIXER2()
 
 static void DUPLICATE2()
 {
-    WORD Count = (inst1 >> 16) & 0xff;
-    WORD In = inst1 & 0xffff;
-    WORD Out = (inst2 >> 16);
+    unsigned short Count = (inst1 >> 16) & 0xff;
+    unsigned short In = inst1 & 0xffff;
+    unsigned short Out = (inst2 >> 16);
 
-    WORD buff[64];
+    unsigned short buff[64];
 
     memcpy(buff, BufferSpace + In, 128);
 
@@ -733,12 +733,12 @@ static void INTERL2 () { // Make your own...
 static void INTERL2()
 {
     short Count = inst1 & 0xffff;
-    WORD Out = inst2 & 0xffff;
-    WORD In = (inst2 >> 16);
+    unsigned short Out = inst2 & 0xffff;
+    unsigned short In = (inst2 >> 16);
 
-    BYTE *src, *dst, tmp;
-    src = (BYTE *)(BufferSpace); //[In];
-    dst = (BYTE *)(BufferSpace); //[Out];
+    unsigned char *src, *dst, tmp;
+    src = (unsigned char *)(BufferSpace); //[In];
+    dst = (unsigned char *)(BufferSpace); //[Out];
     while (Count)
     {
         *(short *)(dst + (Out ^ 3)) = *(short *)(src + (In ^ 3));

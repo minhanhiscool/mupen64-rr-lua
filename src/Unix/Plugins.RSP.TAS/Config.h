@@ -29,3 +29,5 @@ void config_save();
 void config_load();
 
 void config_show_dialog();
+
+void dialog_function();
