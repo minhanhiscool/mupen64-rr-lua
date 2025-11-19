@@ -129,6 +129,11 @@ endif()
 # define _DEBUG for debug builds
 add_compile_definitions("$<$<CONFIG:Debug>:_DEBUG>")
 
+# colors are pretty
+if (NOT MSVC)
+  add_compile_options(-fdiagnostics-color=always)
+endif()
+
 
 
 # Subdirectories
