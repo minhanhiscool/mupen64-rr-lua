@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
+#include "menubar.h"
+
 int main(int argc, char *argv[])
 {
     if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVENTS))
@@ -46,9 +48,20 @@ int main(int argc, char *argv[])
 
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplSDL3_NewFrame();
-        ImGui::NewFrame();
 
-        ImGui::Begin("Mupen64", &running);
+        // fullscreen
+        ImGui::NewFrame();
+        ImGuiViewport *vp = ImGui::GetMainViewport();
+        ImGui::SetNextWindowPos(vp->Pos);
+        ImGui::SetNextWindowSize(vp->Size);
+
+        ImGuiWindowFlags main_menu_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoResize |
+                                           ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus |
+                                           ImGuiWindowFlags_MenuBar;
+
+        ImGui::Begin("Mupen64", nullptr, main_menu_flags);
+        DrawMenuBar();
+        ImGui::Text("WIP");
         ImGui::End();
 
         ImGui::Render();

@@ -5,7 +5,10 @@ SPDX-License-Identifier: GPL-2.0-or-later
 ]===]
 
 add_executable(Mupen64RR.Views.Unix
+    "menubar.h"
+
     "main.cpp"
+    "menubar.cpp"
 )
 
 set_target_properties(Mupen64RR.Views.Unix PROPERTIES
