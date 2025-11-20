@@ -70,6 +70,7 @@ endif()
 # pkg-config libraries
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(speexdsp IMPORTED_TARGET GLOBAL "speexdsp")
+pkg_check_modules(SDL3 IMPORTED_TARGET GLOBAL "sdl3" REQUIRED)
 
 # cmake libraries
 find_package(libdeflate CONFIG REQUIRED)

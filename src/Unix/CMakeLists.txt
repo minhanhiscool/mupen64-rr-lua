@@ -7,8 +7,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 if (UNIX)
     # VIEW
     # ============================
-
-    # add_subdirectory(Views.Win32)
+    
+    # TODO: Implement Views.Unix
+    add_subdirectory(Views.Unix)
 
     # BUNDLED PLUGINS
     # ============================

@@ -1,0 +1,5 @@
+if(EXISTS "/home/minhanhiscoolish/mupen64-rr-lua/test/Core.Tests/Mupen64RR.Core.Tests-b12d07c_tests.cmake")
+  include("/home/minhanhiscoolish/mupen64-rr-lua/test/Core.Tests/Mupen64RR.Core.Tests-b12d07c_tests.cmake")
+else()
+  add_test(Mupen64RR.Core.Tests_NOT_BUILT-b12d07c Mupen64RR.Core.Tests_NOT_BUILT-b12d07c)
+endif()

@@ -30,6 +30,7 @@ set_target_properties(Mupen64RR.Plugins.RSP.TAS PROPERTIES
 target_include_directories(Mupen64RR.Plugins.RSP.TAS PRIVATE ".")
 target_link_libraries(Mupen64RR.Plugins.RSP.TAS PRIVATE Mupen64RR.Plugins.Unix.Common)
 target_link_libraries(Mupen64RR.Plugins.RSP.TAS PRIVATE
+    SDL3::SDL3
     imgui
     OpenGL::GL
 )
