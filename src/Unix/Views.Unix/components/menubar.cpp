@@ -39,9 +39,9 @@ void DrawMenuBar()
         {
             if (ImGui::MenuItem("Open ROM", "Ctrl O"))
             {
-                nfdfilteritem_t filter = {
-                    "N64 ROM",
-                    "n64,z64,v64",
+                SDL_DialogFileFilter filter = {
+                    "N64 Roms",
+                    "n64;z64;v64",
                 };
                 OpenFileDialog(filter, 1);
             }

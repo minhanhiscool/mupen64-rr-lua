@@ -38,6 +38,5 @@ target_link_libraries(Mupen64RR.Views.Unix PRIVATE
     SDL3::SDL3
     imgui
     OpenGL::GL
-    vendor::nfd
 )
 

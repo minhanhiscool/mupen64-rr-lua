@@ -6,77 +6,46 @@
 
 #include "file.h"
 
-std::string OpenFileDialog(nfdfilteritem_t filter, int numFilters)
+std::string path;
+
+static void SDLCALL callback(void *userdata, const char *const *filelist, int filter)
 {
-    NFD_Init();
-
-    std::string ret = "";
-
-    nfdnchar_t *outPath = nullptr;
-    nfdresult_t result = NFD_OpenDialogN(&outPath, &filter, numFilters, nullptr);
-
-    if (result == NFD_OKAY)
+    if (!filelist)
     {
-        spdlog::info("File selected: {}", outPath);
-        ret = outPath;
-        NFD_FreePathN(outPath);
+        spdlog::error("Error opening file dialog: {}", SDL_GetError());
+        return;
     }
-    else if (result == NFD_CANCEL)
+    else if (!*filelist)
     {
-        spdlog::info("File selection cancelled");
+        spdlog::info("No file selected");
+        return;
     }
-    else
+    while (*filelist)
     {
-        spdlog::error("Error selecting file: {}", NFD_GetError());
+        spdlog::info("File {}: {}", userdata, *filelist);
+        path = *filelist;
+        filelist++;
     }
+}
 
-    NFD_Quit();
-    return ret;
+std::string OpenFileDialog(SDL_DialogFileFilter filter, int numFilters)
+{
+    std::string type = "opened";
+    SDL_ShowOpenFileDialog(callback, &type, nullptr, &filter, numFilters, nullptr, 0);
+
+    return path;
 }
 
 std::string OpenDirectoryDialog()
 {
-    NFD_Init();
+    std::string type = "opened";
+    SDL_ShowOpenFolderDialog(callback, &type, nullptr, nullptr, 0);
 
-    std::string ret = "";
-
-    nfdnchar_t *outPath = nullptr;
-    nfdresult_t result = NFD_PickFolderN(&outPath, nullptr);
-
-    if (result == NFD_OKAY)
-    {
-        spdlog::info("Directory selected: {}", outPath);
-        ret = outPath;
-        NFD_FreePathN(outPath);
-    }
-    else if (result == NFD_CANCEL)
-    {
-        spdlog::info("Directory selection cancelled");
-    }
-    else
-    {
-        spdlog::error("Error selecting directory: {}", NFD_GetError());
-    }
-
-    NFD_Quit();
-    return ret;
+    return path;
 }
 
-void SaveFileDialog(nfdfilteritem_t filter, int numFilters, const char *defaultName)
+void SaveFileDialog(SDL_DialogFileFilter filter, int numFilters)
 {
-    NFD_Init();
-
-    nfdnchar_t *outPath = nullptr;
-
-    if (NFD_SaveDialogN(&outPath, &filter, numFilters, nullptr, defaultName) == NFD_OKAY)
-    {
-        spdlog::info("File saved: {}", outPath);
-        NFD_FreePathN(outPath);
-    }
-    else
-    {
-        spdlog::error("Error saving file: {}", NFD_GetError());
-    }
-    NFD_Quit();
-    return;
+    std::string type = "saved";
+    SDL_ShowSaveFileDialog(callback, &type, nullptr, &filter, numFilters, nullptr);
 }
