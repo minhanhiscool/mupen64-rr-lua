@@ -6,9 +6,11 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 add_executable(Mupen64RR.Views.Unix
     "menubar.h"
+    "rombrowser.h"
 
     "main.cpp"
     "menubar.cpp"
+    "rombrowser.cpp"
 )
 
 set_target_properties(Mupen64RR.Views.Unix PROPERTIES

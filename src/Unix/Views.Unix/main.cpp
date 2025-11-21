@@ -5,6 +5,7 @@
  */
 
 #include "menubar.h"
+#include "rombrowser.h"
 
 int main(int argc, char *argv[])
 {
@@ -61,8 +62,11 @@ int main(int argc, char *argv[])
                                            ImGuiWindowFlags_MenuBar;
 
         ImGui::Begin("Mupen64", nullptr, main_menu_flags);
+
+        // drawing shenanigans here
         DrawMenuBar();
-        ImGui::Text("WIP");
+        DrawROMBrowser();
+        // end
         ImGui::End();
 
         ImGui::Render();
