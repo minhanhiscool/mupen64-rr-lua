@@ -5,6 +5,7 @@
  */
 
 #include "menubar.h"
+#include "file.h"
 
 // TODO: Let users customize shortcuts
 
@@ -38,6 +39,11 @@ void DrawMenuBar()
         {
             if (ImGui::MenuItem("Open ROM", "Ctrl O"))
             {
+                nfdfilteritem_t filter = {
+                    "N64 ROM",
+                    "n64,z64,v64",
+                };
+                OpenFileDialog(filter, 1);
             }
             if (ImGui::MenuItem("Close ROM", "Ctrl W"))
             {
@@ -63,7 +69,6 @@ void DrawMenuBar()
 
         if (ImGui::BeginMenu("Emulation"))
         {
-            // TODO: Add Puase function
             if (ImGui::MenuItem("Pause", "Pause"))
             {
             }

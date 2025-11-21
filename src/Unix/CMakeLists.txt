@@ -7,7 +7,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 if (UNIX)
     # VIEW
     # ============================
-    
+    #
     # TODO: Implement Views.Unix
     add_subdirectory(Views.Unix)
 

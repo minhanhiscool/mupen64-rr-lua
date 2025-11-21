@@ -28,4 +28,5 @@ extern "C"
 #include <imgui_impl_sdl3.h>
 #include <imgui_impl_opengl3.h>
 #include "spdlog/spdlog.h"
+
 #pragma warning pop

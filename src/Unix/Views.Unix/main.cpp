@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-#include "menubar.h"
-#include "rombrowser.h"
+#include "components/menubar.h"
+#include "components/rombrowser.h"
 
 int main(int argc, char *argv[])
 {
@@ -22,16 +22,16 @@ int main(int argc, char *argv[])
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
-    SDL_Window *window = SDL_CreateWindow("Mupen64", 1280, 720, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
-    SDL_GLContext gl_context = SDL_GL_CreateContext(window);
-    SDL_GL_MakeCurrent(window, gl_context);
+    SDL_Window *gWindow = SDL_CreateWindow("Mupen64", 1280, 720, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+    SDL_GLContext gl_context = SDL_GL_CreateContext(gWindow);
+    SDL_GL_MakeCurrent(gWindow, gl_context);
     SDL_GL_SetSwapInterval(1);
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO &io = ImGui::GetIO();
 
-    ImGui_ImplSDL3_InitForOpenGL(window, gl_context);
+    ImGui_ImplSDL3_InitForOpenGL(gWindow, gl_context);
     ImGui_ImplOpenGL3_Init("#version 130");
 
     bool running = true;
@@ -71,12 +71,12 @@ int main(int argc, char *argv[])
 
         ImGui::Render();
         int display_w, display_h;
-        SDL_GetWindowSize(window, &display_w, &display_h);
+        SDL_GetWindowSize(gWindow, &display_w, &display_h);
         glViewport(0, 0, display_w, display_h);
         glClearColor(0.45f, 0.55f, 0.60f, 1.00f);
         glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-        SDL_GL_SwapWindow(window);
+        SDL_GL_SwapWindow(gWindow);
     }
 
     ImGui_ImplOpenGL3_Shutdown();
@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
     ImGui::DestroyContext();
 
     SDL_GL_DestroyContext(gl_context);
-    SDL_DestroyWindow(window);
+    SDL_DestroyWindow(gWindow);
     SDL_Quit();
     return 0;
 }

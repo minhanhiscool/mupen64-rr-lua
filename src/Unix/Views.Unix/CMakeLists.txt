@@ -5,12 +5,14 @@ SPDX-License-Identifier: GPL-2.0-or-later
 ]===]
 
 add_executable(Mupen64RR.Views.Unix
-    "menubar.h"
-    "rombrowser.h"
+    "components/menubar.h"
+    "components/rombrowser.h"
+    "components/file.h"
 
     "main.cpp"
-    "menubar.cpp"
-    "rombrowser.cpp"
+    "components/menubar.cpp"
+    "components/rombrowser.cpp"
+    "components/file.cpp"
 )
 
 set_target_properties(Mupen64RR.Views.Unix PROPERTIES
@@ -36,5 +38,6 @@ target_link_libraries(Mupen64RR.Views.Unix PRIVATE
     SDL3::SDL3
     imgui
     OpenGL::GL
+    vendor::nfd
 )
 
