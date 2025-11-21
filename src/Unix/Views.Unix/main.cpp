@@ -49,8 +49,9 @@ int main(int argc, char *argv[])
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplSDL3_NewFrame();
 
-        // fullscreen
         ImGui::NewFrame();
+
+        // fullscreen
         ImGuiViewport *vp = ImGui::GetMainViewport();
         ImGui::SetNextWindowPos(vp->Pos);
         ImGui::SetNextWindowSize(vp->Size);
